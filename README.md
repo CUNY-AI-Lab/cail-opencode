@@ -4,15 +4,25 @@ Adds CUNY AI Lab to [OpenCode](https://opencode.ai): the lab's models through th
 
 ## Set up
 
-1. Install OpenCode. The desktop app is at [opencode.ai/download](https://opencode.ai/download) for macOS, Windows and Linux.
+1. Install the OpenCode desktop app from [opencode.ai/download](https://opencode.ai/download). On a Mac, drag it into Applications.
 
-2. Add the CUNY AI Lab plugin. In a terminal:
+2. Add CUNY AI Lab to OpenCode with one line. It uses the copy of OpenCode's command-line tool that comes inside the desktop app, so there is nothing else to install.
 
-   ```text
-   opencode plugin add @cuny-ai-lab/cail-opencode@latest
+   On a Mac, open Terminal, paste this line and press Return:
+
+   ```bash
+   /Applications/OpenCode.app/Contents/Resources/opencode-cli plugin add @cuny-ai-lab/cail-opencode@latest
    ```
 
-   OpenCode reloads its plugins by itself. If the desktop app is open and CUNY AI Lab doesn't appear in the next step, choose **Settings › Extensions › Plugins › Reload**, or restart the app.
+   On Windows, open PowerShell, paste this line and press Enter:
+
+   ```powershell
+   & "$env:LOCALAPPDATA\Programs\ai.opencode.desktop\resources\opencode-cli.exe" plugin add "@cuny-ai-lab/cail-opencode@latest"
+   ```
+
+   If you already use OpenCode in a terminal, `opencode plugin add @cuny-ai-lab/cail-opencode@latest` does the same.
+
+   If OpenCode was open, quit it and open it again.
 
 3. Sign in. In OpenCode, open the providers list, choose **CUNY AI Lab**, then **Sign in with CUNY AI Lab**. Your browser opens the lab's sign-in page. Sign in with your CUNY Login, click **Connect OpenCode**, and go back to OpenCode.
 
@@ -29,7 +39,7 @@ If OpenCode runs on another computer than your browser, for example over SSH, ch
 ## Troubleshooting
 
 **CUNY AI Lab isn't in the providers list**
-Run `opencode plugin list`. It should show `@cuny-ai-lab/cail-opencode`. If it does, choose **Settings › Extensions › Plugins › Reload** in the desktop app, or restart OpenCode.
+Run the line from step 2 with `plugin check` in place of `plugin add` and the package name, for example `/Applications/OpenCode.app/Contents/Resources/opencode-cli plugin check` on a Mac. It should list `cail`. If it does, quit OpenCode and open it again.
 
 **"Your CUNY AI Lab sign-in has expired"**
 Keys from signing in last 180 days. Sign in with CUNY AI Lab again.
@@ -48,9 +58,13 @@ OpenCode keeps each sign-in as its own account, and plugins can't remove one. Af
 
 ## Updates and removal
 
-Update the plugin with `opencode plugin update @cuny-ai-lab/cail-opencode`. OpenCode also checks for plugin updates when it starts.
+OpenCode does not update plugins by itself. To update, run the line from step 2 with `update` in place of `add`, then quit OpenCode and open it again. On a Mac:
 
-Remove it with `opencode plugin remove @cuny-ai-lab/cail-opencode`. To revoke the key it created, use [Model access](https://tools.ailab.gc.cuny.edu/model-access).
+```bash
+/Applications/OpenCode.app/Contents/Resources/opencode-cli plugin update @cuny-ai-lab/cail-opencode@latest
+```
+
+To remove the plugin, use `remove` in place of `add`. To revoke the key it created, use [Model access](https://tools.ailab.gc.cuny.edu/model-access).
 
 ---
 
