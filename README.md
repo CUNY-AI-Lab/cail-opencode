@@ -61,7 +61,7 @@ OpenCode keeps each sign-in as its own account, and plugins can't remove one. Af
 
 ## Updates and removal
 
-OpenCode does not update plugins by itself. To update, run the line from step 2 with `update` in place of `add`, then quit OpenCode and open it again. On a Mac:
+OpenCode does not update plugins by itself. To update, open OpenCode, run the line from step 2 with `update` in place of `add`, then quit OpenCode and open it again. On a Mac:
 
 ```bash
 /Applications/OpenCode.app/Contents/Resources/opencode-cli plugin update @cuny-ai-lab/cail-opencode@latest
