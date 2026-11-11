@@ -24,7 +24,7 @@ Adds CUNY AI Lab to [OpenCode](https://opencode.ai): the lab's models through th
 
    If OpenCode was open, quit it and open it again.
 
-3. Sign in. In OpenCode, open the providers list, choose **CUNY AI Lab**, then **Sign in with CUNY AI Lab**. Your browser opens the lab's sign-in page. Sign in with your CUNY Login, click **Connect OpenCode**, and go back to OpenCode.
+3. Sign in. In OpenCode, open **Settings › Providers**, click **Show more providers**, search for **CUNY** and choose **CUNY AI Lab**, then **Sign in with CUNY AI Lab**. Your browser opens the lab's sign-in page. Sign in with your CUNY Login, click **Connect OpenCode**, and go back to OpenCode.
 
 New sessions start on the newest DeepSeek Flash unless you have chosen a default model yourself.
 
@@ -40,6 +40,9 @@ If OpenCode runs on another computer than your browser, for example over SSH, ch
 
 **CUNY AI Lab isn't in the providers list**
 Run the line from step 2 with `plugin check` in place of `plugin add` and the package name, for example `/Applications/OpenCode.app/Contents/Resources/opencode-cli plugin check` on a Mac. It should list `cail`. If it does, quit OpenCode and open it again.
+
+**"No versions available for @cuny-ai-lab/cail-opencode"**
+Your npm settings hold back new releases for a while (`min-release-age` in `~/.npmrc`), and OpenCode follows them. Wait, or run the line from step 2 once with `npm_config_min_release_age=0` in front of it.
 
 **"Your CUNY AI Lab sign-in has expired"**
 Keys from signing in last 180 days. Sign in with CUNY AI Lab again.
