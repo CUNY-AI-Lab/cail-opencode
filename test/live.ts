@@ -39,6 +39,15 @@ const env = {
   TERM: "dumb",
   AILAB_API_KEY: key,
 }
+/** Windows can hold OpenCode's files for a moment after its service stops; leftover temp files don't fail the test. */
+function removeTemp(path: string) {
+  try {
+    rmSync(path, { recursive: true, force: true, maxRetries: 10, retryDelay: 500 })
+  } catch (error) {
+    console.warn(`Could not remove ${path}: ${(error as Error).message}`)
+  }
+}
+
 const opencode = (...args: string[]) =>
   new Promise<{ status: number | null; output: string }>((resolve, reject) => {
     const child = spawn(binary, args, { env, cwd: join(home, "project"), stdio: ["ignore", "pipe", "pipe"] })
@@ -70,5 +79,5 @@ try {
   console.log("Live check passed")
 } finally {
   await opencode("service", "stop")
-  rmSync(work, { recursive: true, force: true })
+  removeTemp(work)
 }

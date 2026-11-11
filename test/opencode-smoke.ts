@@ -121,6 +121,15 @@ function packedPlugin() {
   return dir
 }
 
+/** Windows can hold OpenCode's files for a moment after its service stops; leftover temp files don't fail the test. */
+function removeTemp(path: string) {
+  try {
+    rmSync(path, { recursive: true, force: true, maxRetries: 10, retryDelay: 500 })
+  } catch (error) {
+    console.warn(`Could not remove ${path}: ${(error as Error).message}`)
+  }
+}
+
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 async function main() {
@@ -280,7 +289,7 @@ async function main() {
     await opencode("service", "stop")
     await mock.close()
     if (failed && process.env.KEEP_FAILED) console.error(`Kept ${work}`)
-    else rmSync(work, { recursive: true, force: true })
+    else removeTemp(work)
   }
 }
 
