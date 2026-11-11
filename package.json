@@ -1,0 +1,56 @@
+{
+  "name": "@cuny-ai-lab/cail-opencode",
+  "version": "0.1.0",
+  "description": "CUNY AI Lab models and Sign in with CUNY AI Lab for OpenCode",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CUNY-AI-Lab/cail-opencode.git"
+  },
+  "homepage": "https://github.com/CUNY-AI-Lab/cail-opencode#readme",
+  "bugs": {
+    "url": "https://github.com/CUNY-AI-Lab/cail-opencode/issues"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "cuny",
+    "cuny-ai-lab"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "opencode": {
+    "tested": "2.2.7"
+  },
+  "scripts": {
+    "build": "bun -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p test/tsconfig.json --noEmit",
+    "test": "bun test test/unit",
+    "test:opencode": "bun run build && bun test/opencode-smoke.ts",
+    "prepack": "bun run build",
+    "test:live": "bun run build && bun test/live.ts"
+  },
+  "devDependencies": {
+    "@opencode/plugin": "2.2.7",
+    "@types/bun": "1.4.4",
+    "typescript": "5.9.3"
+  },
+  "packageManager": "bun@1.4.3"
+}

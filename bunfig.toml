@@ -1,0 +1,3 @@
+[install]
+# @opencode/plugin lists GUI and TUI peers (Electron, Solid, Vite) that a server plugin never loads.
+peer = false
