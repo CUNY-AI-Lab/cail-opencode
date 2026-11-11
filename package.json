@@ -1,6 +1,6 @@
 {
   "name": "@cuny-ai-lab/cail-opencode",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CUNY AI Lab models and Sign in with CUNY AI Lab for OpenCode",
   "license": "MIT",
   "type": "module",

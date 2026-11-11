@@ -55,6 +55,32 @@ describe("catalog", () => {
     expect(models.map((model) => model.id as string)).toEqual(["current", "later"])
   })
 
+  test("lists models in the lab's order, with the newest DeepSeek Flash first", () => {
+    const tools = ["text-generation", "function-calling"]
+    const models = toModels({
+      data: [
+        { id: "unordered-a", capabilities: tools },
+        { id: "third", capabilities: tools, order: 9 },
+        { id: "deepseek-v4.1-flash-1017", capabilities: tools, order: 5 },
+        { id: "first", capabilities: tools, order: 1 },
+        { id: "unordered-b", capabilities: tools },
+        { id: "second", capabilities: tools, order: 2 },
+      ],
+    })
+    expect(models.map((model) => model.id as string)).toEqual([
+      "deepseek-v4.1-flash-1017",
+      "first",
+      "second",
+      "third",
+      "unordered-a",
+      "unordered-b",
+    ])
+
+    const live = toModels(catalog).map((model) => model.id as string)
+    expect(live[0]).toBe("deepseek-v4.1-flash-1017")
+    expect(live.slice(1, 4)).toEqual(["glm-5.3", "qwen3.8-27b", "gpt-oss-120b"])
+  })
+
   test("rejects a response that is not a model list", () => {
     expect(() => parseCatalog({ models: [] })).toThrow(CatalogError)
     expect(() => parseCatalog(null)).toThrow(CatalogError)

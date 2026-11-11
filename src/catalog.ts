@@ -133,8 +133,21 @@ export function newestDeepSeekFlash<T extends { id: string }>(models: readonly T
 }
 
 /** Convert a raw `/v1/models` payload into OpenCode models. Throws CatalogError when the payload is malformed. */
+/**
+ * Models in the lab's curated order (the catalog's `order`; entries without
+ * one keep their catalog position after the rest), with the newest DeepSeek
+ * Flash first. OpenCode lists a new provider's models in this order right
+ * after sign-in and preselects the first, so the first is the default model.
+ */
 export function toModels(payload: unknown, { now = Date.now() }: { now?: number } = {}): Model.Info[] {
-  return parseCatalog(payload)
+  const models = parseCatalog(payload)
     .filter((entry) => isTextGeneration(entry) && supportsTools(entry) && !isRetired(entry, now))
+    .sort((a, b) => catalogRank(a) - catalogRank(b))
     .map(toModel)
+  const flash = newestDeepSeekFlash(models)
+  return flash ? [flash, ...models.filter((model) => model !== flash)] : models
+}
+
+function catalogRank(entry: CatalogEntry): number {
+  return typeof entry.order === "number" && Number.isFinite(entry.order) ? entry.order : Number.MAX_SAFE_INTEGER
 }
